@@ -10,21 +10,19 @@
       searchingText: "Searching..."
     }
 
-
     $.extend(defaultedOptions, options)
 
     #because we define the success callback for each
     #search we need to store the user supplied success
     if defaultedOptions.userSuppliedSuccess
       defaultedOptions.userSuppliedSuccess = defaultedOptions.success
-
     
     #by design, chosen only has one state for when you 
     #don't have matching items: No Results. 
     #However, we need two states, searching
     #and no results. 
     #
-    #TODO: you accidentally lose any user definied no_results_test
+    #TODO: you accidentally lose any user defined no_results_test
     defaultedOptions.chosenOptions.no_results_text = defaultedOptions.searchingText
 
     # determining whether this allows
@@ -69,24 +67,23 @@
           # store the current value in the element
           $(this).data('prevVal', val)
 
-         #grab a reference to the input field
+          # Grab a reference to the input field
           field = $(this)
 
           #our hack above changes the No Results text to 'Searching...'
           #we should change it back in the case there are no results
           #within a native chosen search
           clearSearchingLabel = =>
-              if multiple
-                resultsDiv = field.parent().parent().siblings()
-              else
-                resultsDiv = field.parent().parent()
-              #chosen does a fancy regex when matching, so 
-              #we use the raw field value (e.g. not trimmed)
-              #in case it's terminal spaces preventing the match
-              resultsDiv.find('.no-results').html("No results. '" + $(this).attr('value') + "'")
+            if multiple
+              resultsDiv = field.parent().parent().siblings()
+            else
+              resultsDiv = field.parent().parent()
+            #chosen does a fancy regex when matching, so
+            #we use the raw field value (e.g. not trimmed)
+            #in case it's terminal spaces preventing the match
+            resultsDiv.find('.no-results').html("No results. '" + $(this).attr('value') + "'")
 
-
-          # Checking minimum search length and dupliplicate value searches
+          # Checking minimum search length and duplicate value searches
           # to avoid excess ajax calls.
           if val.length < defaultedOptions.minLength or val is prevVal
             clearSearchingLabel()
@@ -94,15 +91,6 @@
 
           #grab the items that are currently in the matching field list
           currentOptions = select.find('option')
-
-          #if there are fewer than 10 of these and we're making a longer
-          #query, we can let regular chosen handle the filtering
-          #provided that we've already done at least one call
-          if currentOptions.length < defaultedOptions.queryLimit and
-                val.indexOf(prevVal) is 0 and
-                prevVal isnt ''
-              clearSearchingLabel()
-              return false
 
           #add the search parameter to the ajax request data
           defaultedOptions.data[defaultedOptions.queryParameter] =  val
@@ -155,7 +143,7 @@
             #this may seem to come late, but... 
             #if we actually have found nothing on the server, 
             #we display a custom no results tag
-             #if there are no results on the server
+            #if there are no results on the server
             #add a no results tag. 
             if $.isEmptyObject(data)
               noResult = $('<option>')
@@ -185,7 +173,6 @@
               keydownEvent.which = 40 #the down arrow
               field.trigger(keydownEvent)
 
-
             # Finally, call the user supplied callback (if it exists)
             if defaultedOptions.userSuppliedSuccess
               defaultedOptions.userSuppliedSuccess(data) 
@@ -197,6 +184,5 @@
 
           #end of search function
         this.previousSearch = setTimeout(search, 100);
-
-
+        
 )(jQuery)
