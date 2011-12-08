@@ -12,10 +12,9 @@ The first argument is an option parameter for the plugin specific parameters
 
 ajaxChosen specific parameters are: 
 
-minLength: this is the number of characters that need to be typed before search occurs. Default is 3.
-queryParameter: this is the query parameter that is used for your search. Default is 'term'. 
-queryLimit: this is the max number of items that your server will ever return, and it is used for client side caching. Default is 10. 
-data: this is what jQuery uses to convey your query. Feel free to add additional params, such as limits and sort orders. Default is {}
+- minLength: this is the number of characters that need to be typed before search occurs. Default is 3.
+- queryLimit: this is the max number of items that your server will ever return, and it is used for client side caching. Default is 10. 
+- delay: time to wait between key strokes
 
 
 The second argument is a callback that the plugin uses to get option elements. The callback is expected to make ajax call, it receives as first argument the options of plugin and must call its second argument to pass the values back to the plugin, e.g. if it were a list of states it would be
