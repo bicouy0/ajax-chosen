@@ -8,7 +8,7 @@ This script bootstraps the existing Chosen plugin without making any modificatio
 
 This plugin exposes a new jQuery function named `ajaxChosen` that we call on a `select` element. 
 
-The first argument is an option parameter for the jQuery $.ajax function that can (optionally) be augmented with ajaxChosen specific parameters. The `success` callback is optional. 
+The first argument is an option parameter for the plugin specific parameters
 
 ajaxChosen specific parameters are: 
 
@@ -18,7 +18,7 @@ queryLimit: this is the max number of items that your server will ever return, a
 data: this is what jQuery uses to convey your query. Feel free to add additional params, such as limits and sort orders. Default is {}
 
 
-The second argument is a callback that the plugin uses to make option elements. The callback is expected to take ajax data and return a make of values to displays, e.g. if it were a list of states it would be
+The second argument is a callback that the plugin uses to get option elements. The callback is expected to make ajax call, it receives as first argument the options of plugin and must call its second argument to pass the values back to the plugin, e.g. if it were a list of states it would be
 	
 	states[state.id] = state.name;
 
