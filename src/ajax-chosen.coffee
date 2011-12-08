@@ -4,6 +4,7 @@
     defaultedOptions = {
       minLength: 3,
       queryLimit: 10,
+      delay: 100,
       chosenOptions: {},
       searchingText: "Searching...",
       noresultsText: "No results."
@@ -194,7 +195,7 @@
           callback(defaultedOptions, response)
 
           #end of search function
-        this.previousSearch = setTimeout(search, 100);
+        this.previousSearch = setTimeout(search, defaultedOptions.delay);
 
 
 )(jQuery)
