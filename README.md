@@ -31,18 +31,19 @@ which would become
 
 ``` js
 $("#example-input").ajaxChosen({
-	method: 'GET',
-	url: '/ajax-chosen/data.php',
-	dataType: 'json'
-	queryParameter: 'q'
-}, function (data) {
-	var terms = {};
+    minLength: 2,
+    delay: 300
+}, function (options, response) {
+    $.getJSON("/ajax-chosen/data.php", {q: options.term}, function (data) {
+
+	    var terms = {};
 			
-	$.each(data, function (i, val) {
-		terms[i] = val;
-	});
+	    $.each(data, function (i, val) {
+		    terms[i] = val;
+	    });
 			
-	return terms;
+	    response(terms);
+    });
 });
 ```
 
