@@ -12,12 +12,6 @@
 
     $.extend(defaultedOptions, options)
 
-    #because we define the success callback for each
-    #search we need to store the user supplied success
-    #if defaultedOptions.userSuppliedSuccess
-    #  defaultedOptions.userSuppliedSuccess = defaultedOptions.success
-
-    
     #by design, chosen only has one state for when you 
     #don't have matching items: No Results. 
     #However, we need two states, searching
@@ -59,17 +53,17 @@
         #wrap the search functionality in a function
         #so that it can be put inside a timeout
         search = => 
+          #grab a reference to the input field
+          field = $(this)
+
           # Retrieve the current value of the input form
-          val = $.trim $(this).attr('value')
+          val = $.trim field.attr('value')
 
           # Retrieve the previous value of the input form
-          prevVal = $(this).data('prevVal') ? ''
+          prevVal = field.data('prevVal') ? ''
 
           # store the current value in the element
-          $(this).data('prevVal', val)
-
-         #grab a reference to the input field
-          field = $(this)
+          field.data('prevVal', val)
 
           #our hack above changes the No Results text to 'Searching...'
           #we should change it back in the case there are no results
@@ -194,7 +188,9 @@
 
             #end of response function
 
-          # Execute the ajax call to search for autocomplete data
+          # Execute the callback to get autocomplete data
+          # callback must call response with items as first argument
+          # and can provide a success callback as second argument
           callback(defaultedOptions, response)
 
           #end of search function
