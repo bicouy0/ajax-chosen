@@ -3,7 +3,7 @@
 <head>
 	<title>Ajax-Chosen: Bootstrapping a Popular jQuery Plugin to add Ajax Autocomplete</title>
 	
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="/ajax-chosen/dist/chosen/chosen/chosen.jquery.min.js"></script>
 	<script type="text/javascript" src="/ajax-chosen/lib/ajax-chosen.js"></script>
 	
@@ -14,21 +14,20 @@
 	</style>
 	
 	<script type="text/javascript">
-	$(document).ready(function () {
-		$("#example1").ajaxChosen({
-			method: 'GET',
-			url: '/ajax-chosen/data.php',
-			dataType: 'json'
-		}, function (data) {
-			var terms = {};
-			
-			$.each(data, function (i, val) {
-				terms[i] = val;
-			});
-			
-			return terms;
-		});
-	});
+        $(function () {
+            $("#example1").ajaxChosen({
+                    minLength: 2,
+                    queryLimit: 0,
+                    noresultsText: 'Nothing found for '
+            },
+            function (options, response) {
+                // the plugin asked for items, options contains the term to search for
+                $.getJSON('/ajax-chosen/data.php', {term: options.term}, function(data) {
+                    // do filtering / mapping and send the items back to plugin
+                    response(data);
+                });
+            });
+        });
 	</script>
 </head>
 <body>

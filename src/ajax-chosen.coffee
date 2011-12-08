@@ -1,11 +1,9 @@
 (($) ->
- $.fn.ajaxChosen = (options, itemBuilder) ->
+ $.fn.ajaxChosen = (options, callback) ->
 
     defaultedOptions = {
       minLength: 3,
-      queryParameter: 'term',
       queryLimit: 10,
-      data: {},
       chosenOptions: {},
       searchingText: "Searching...",
       noresultsText: "No results."
@@ -16,8 +14,8 @@
 
     #because we define the success callback for each
     #search we need to store the user supplied success
-    if defaultedOptions.userSuppliedSuccess
-      defaultedOptions.userSuppliedSuccess = defaultedOptions.success
+    #if defaultedOptions.userSuppliedSuccess
+    #  defaultedOptions.userSuppliedSuccess = defaultedOptions.success
 
     
     #by design, chosen only has one state for when you 
@@ -106,19 +104,15 @@
               return false
 
           #add the search parameter to the ajax request data
-          defaultedOptions.data[defaultedOptions.queryParameter] =  val
+          defaultedOptions.term = val
 
-          # Create our own success callback
-          defaultedOptions.success = (data) ->
+          # Create our own response callback
+          response = (items, success) ->
 
             #note: sometimes a person will leave the input
             #      before success happens. In this case, jettison the results
             #
             return unless field.is(':focus')
-
-            # Send the ajax results to the user itemBuilder so we can get an object of
-            # value => text pairs
-            items = itemBuilder data
 
             # use value => text pairs to build <option> tags
             newOptions = []
@@ -163,7 +157,7 @@
             #we display a custom no results tag
              #if there are no results on the server
             #add a no results tag. 
-            if $.isEmptyObject(data)
+            if $.isEmptyObject(items)
               noResult = $('<option>')
               noResult.addClass('no-results')
               noResult.html(defaultedOptions.noresultsText + " '" + latestVal + "'").attr('value', '')
@@ -186,7 +180,7 @@
             #
             field.val(latestVal)
 
-            if !$.isEmptyObject(data) 
+            if !$.isEmptyObject(items) 
               #to mimic the chosen winnowing behavior, 
               #we highlight the first result with a keydown event
               keydownEvent = $.Event('keydown')
@@ -195,13 +189,13 @@
 
 
             # Finally, call the user supplied callback (if it exists)
-            if defaultedOptions.userSuppliedSuccess
-              defaultedOptions.userSuppliedSuccess(data) 
+            if success
+              success(items) 
 
-            #end of success function
+            #end of response function
 
           # Execute the ajax call to search for autocomplete data
-          $.ajax(defaultedOptions)
+          callback(defaultedOptions, response)
 
           #end of search function
         this.previousSearch = setTimeout(search, 100);
