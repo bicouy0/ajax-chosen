@@ -5,12 +5,13 @@
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="/ajax-chosen/dist/chosen/chosen/chosen.jquery.min.js"></script>
-	<script type="text/javascript" src="/ajax-chosen/lib/ajax-chosen.js"></script>
+	<script type="text/javascript" src="/ajax-chosen/lib/ajax-chosen.min.js"></script>
 	
 	<link type="text/css" rel="stylesheet" href="/ajax-chosen/dist/chosen/chosen/chosen.css" />
 	
 	<style type="text/css">
 	#example1 { width: 300px; }
+    footer { margin-top: 50px; }
 	</style>
 	
 	<script type="text/javascript">
@@ -33,6 +34,10 @@
 <body>
 	<h1>Ajax-Chosen: Bootstrapping a jQuery Plugin</h1>
 	
-	<select id="example1" title="Search for a state" multiple></select>
+	<select id="example1" data-placeholder="Search for a state" multiple></select>
+
+    <footer>
+        Examples: <a href="index.html">default</a> <a href="geonames.html">geonames</a> <a href="geobytes.html">geobytes</a>
+    </footer>
 </body>
 </html>

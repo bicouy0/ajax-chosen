@@ -5,23 +5,24 @@
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="/ajax-chosen/dist/chosen/chosen/chosen.jquery.min.js"></script>
-	<script type="text/javascript" src="/ajax-chosen/lib/ajax-chosen.js"></script>
+	<script type="text/javascript" src="/ajax-chosen/lib/ajax-chosen.min.js"></script>
 	
 	<link type="text/css" rel="stylesheet" href="/ajax-chosen/dist/chosen/chosen/chosen.css" />
 	
 	<style type="text/css">
-	#keywords { width: 600px; }
+	#cities { width: 600px; }
+    footer { margin-top: 50px; }
 	</style>
 	
 	<script type="text/javascript">
         $(function () {
-            $("#keywords").ajaxChosen({
+            $("#cities").ajaxChosen({
                 minLength: 2,
                 queryLimit: 0
             },
             function (request, response) {
                 // the plugin asked for items, options contains the term to search for
-                jQuery.getJSON('http://gd.geobytes.com/AutoCompleteCity?callback=?&q=' + request.term, function (data) {
+                $.getJSON('http://gd.geobytes.com/AutoCompleteCity?callback=?', {q: request.term}, function (data) {
                     var terms = {};
 
                     $.each(data, function(i, val) {
@@ -37,6 +38,12 @@
 <body>
 	<h1>Ajax-Chosen: Bootstrapping a jQuery Plugin (geobytes example)</h1>
 
-	<select id="keywords" title="Select cities" multiple></select>
+	<select id="cities" data-placeholder="Select cities" multiple>
+        <option />
+    </select>
+
+    <footer>
+        Examples: <a href="index.html">default</a> <a href="geonames.html">geonames</a> <a href="geobytes.html">geobytes</a>
+    </footer>
 </body>
 </html>
