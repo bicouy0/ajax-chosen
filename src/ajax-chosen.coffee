@@ -1,3 +1,9 @@
+###
+ajax-chosen
+A complement to the jQuery library Chosen that adds ajax autocomplete
+https://github.com/bicouy0/ajax-chosen
+###
+
 (($) ->
  $.fn.ajaxChosen = (options, callback) ->
 
