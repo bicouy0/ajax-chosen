@@ -16,7 +16,6 @@ https://github.com/bicouy0/ajax-chosen
       noresultsText: "No results."
     }
 
-
     $.extend(defaultedOptions, options)
 
     #by design, chosen only has one state for when you 
@@ -24,7 +23,7 @@ https://github.com/bicouy0/ajax-chosen
     #However, we need two states, searching
     #and no results. 
     #
-    #TODO: you may accidentally lose any user definied no_results_test
+    #TODO: you accidentally lose any user defined no_results_test
     defaultedOptions.chosenOptions.no_results_text = defaultedOptions.searchingText
 
     # grab a reference to the select box
@@ -95,15 +94,6 @@ https://github.com/bicouy0/ajax-chosen
           #grab the items that are currently in the matching field list
           currentOptions = select.find('option')
 
-          #if there are fewer than 10 of these and we're making a longer
-          #query, we can let regular chosen handle the filtering
-          #provided that we've already done at least one call
-          if currentOptions.length < defaultedOptions.queryLimit and
-                val.indexOf(prevVal) is 0 and
-                prevVal isnt ''
-              clearSearchingLabel()
-              return false
-
           #add the search parameter to the ajax request data
           defaultedOptions.term = val
 
@@ -157,7 +147,7 @@ https://github.com/bicouy0/ajax-chosen
             #this may seem to come late, but... 
             #if we actually have found nothing on the server, 
             #we display a custom no results tag
-             #if there are no results on the server
+            #if there are no results on the server
             #add a no results tag. 
             if $.isEmptyObject(items)
               noResult = $('<option>')
@@ -189,7 +179,6 @@ https://github.com/bicouy0/ajax-chosen
               keydownEvent.which = 40 #the down arrow
               field.trigger(keydownEvent)
 
-
             # Finally, call the user supplied callback (if it exists)
             if success
               success(items) 
@@ -203,6 +192,4 @@ https://github.com/bicouy0/ajax-chosen
 
           #end of search function
         this.previousSearch = setTimeout(search, defaultedOptions.delay);
-
-
 )(jQuery)
