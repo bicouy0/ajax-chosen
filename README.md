@@ -30,8 +30,12 @@ which would become
 
 ``` js
 $("#example-input").ajaxChosen({
-    minLength: 2,
-    delay: 300
+	minLength: 3,
+	queryLimit: 10,
+	delay: 100,
+	chosenOptions: {},
+	searchingText: "Searching...",
+	noresultsText: "No results."
 }, function (options, response) {
     $.getJSON("/ajax-chosen/data.php", {q: options.term}, function (data) {
 
