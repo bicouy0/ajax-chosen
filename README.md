@@ -15,9 +15,13 @@ ajaxChosen specific parameters are:
 - minLength: this is the number of characters that need to be typed before search occurs. Default is 3.
 - queryLimit: this is the max number of items that your server will ever return, and it is used for client side caching. Default is 10. 
 - delay: time to wait between key strokes
+- chosenOptions: passed to vanilla chosen
+- searchingText: "Searching..."
+- noresultsText: "No results."
+- initialQuery: boolean of wether or not to fire a query when the chosen is first focused
 
 
-The second argument is a callback that the plugin uses to get option elements. The callback is expected to make ajax call, it receives as first argument the options of plugin and must call its second argument to pass the values back to the plugin, e.g. if it were a list of states it would be
+The second argument is a callback that the plugin uses to get option elements. The callback is passed the set options, the response callback, and the event that triggered the callback (focus or keyup). The callback is expected to make ajax call, it receives as first argument the options of plugin and must call its second argument to pass the values back to the plugin, e.g. if it were a list of states it would be
 	
 	states[state.id] = state.name;
 
@@ -25,14 +29,20 @@ which would become
 
 	<option value="state.id">state.name</option>
 
+You can use the event parameter to differentiate between initialQuery and subsequent queries to change behavior accordingly
 
 ## Example Code
 
 ``` js
 $("#example-input").ajaxChosen({
-    minLength: 2,
-    delay: 300
-}, function (options, response) {
+	minLength: 3,
+	queryLimit: 10,
+	delay: 100,
+	chosenOptions: {},
+	searchingText: "Searching...",
+	noresultsText: "No results.",
+	initialQuery: false
+}, function (options, response, event) {
     $.getJSON("/ajax-chosen/data.php", {q: options.term}, function (data) {
 
 	    var terms = {};
@@ -45,5 +55,3 @@ $("#example-input").ajaxChosen({
     });
 });
 ```
-
-Note that this will hit the url: /ajax-chosen/data.php?q=WHATEVS (assuming you're searching for whatevs...)
